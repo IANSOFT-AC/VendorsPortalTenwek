@@ -32,7 +32,11 @@ return [
         /**************************Companies*************************************/
         'Companies' => 'Companies', //357 (Page)
         'SupplierAplicationList'=>'SupplierAplicationList', //66050 Page
-        'VendorCard'=>'VendorCard' //66051
+        'VendorCard'=>'VendorCard', //66051
+        'SupplierCategory'=>'SupplierCategory', // 66057 Page
+        'PostalCodes'=>'PostalCodes',//367 Page
+        'SupplierPartnerDetails'=>'SupplierPartnerDetails', //66056 Page,
+        'Countries'=>'Countries', //10 Page
     ],
 
 ];

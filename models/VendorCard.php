@@ -39,5 +39,43 @@ class VendorCard extends Model
     public $PortalId;
     public $Key;
 
+
+    public function rules()
+    {
+        return [
+            [['E_Mail', 'PIN_No', 'Trade_Licennse_No', 'Supplier_Type', 
+                 'Phone_No', 'Address', 'VAT_Certificate_No', 'Tax_Compliance_Expiry_Date', 'Tax_Compliance_Certificate_No',
+                 'Registration_No', 'Certificate_of_Incorporation', 'Name', 'Key', 'Registration_Date'], 
+            'required'],
+
+           ['E_Mail', 'email'],
+        ];
+    }
+
+
+    public function attributeLabels()
+    {
+        return [
+            'E_Mail' => 'Organization Email',
+            'PIN_No' => 'KRA PIN NO',
+            'Trade_Licennse_No' => ' Trade Licence No',
+            'Supplier_Type' =>  'Supplier Type',
+            'Phone_No' => 'Organization Phone No',
+            'Address' => 'Business Location',
+
+            'VAT_Certificate_No' => 'VAT Certificate No',
+            'Tax_Compliance_Expiry_Date' => 'Tax Compliance Expiry Date',
+            'Trade_Licennse_No' => ' Trade Licence No',
+            'Tax_Compliance_Certificate_No' =>  'Tax Compliance Certificate',
+            'Registration_No' => 'Business Registration No',
+            'Certificate_of_Incorporation' => 'Certificate of Incorporation',
+            'Name'=>'Organization Name'
+
+
+        ];
+    }
+
+
+
 }
 ?>

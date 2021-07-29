@@ -14,6 +14,7 @@ use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use app\models\VerifyEmailForm;
 use app\models\VendorCard;
+use yii\helpers\ArrayHelper;
 
 
 class CompanyProfileController extends Controller
@@ -60,29 +61,82 @@ class CompanyProfileController extends Controller
     {
         $model = new VendorCard();
         $service = Yii::$app->params['ServiceName']['VendorCard'];
-        if(Yii::$app->recruitment->HasProfileOnDynamics(Yii::$app->user->identity->id)){
-            $filter = [
-                'PortalId' => Yii::$app->user->identity->id,
-            ];
-            $result = Yii::$app->navhelper->getData($service, $filter);
-            $model = $this->loadtomodel($result[0],$model);  
+        $SupplierCategories = ArrayHelper::map($this->getSupplierCategories(),'Code','Name') ;
+        $PostalCodes = ArrayHelper::map($this->getPostalCodes(),'Code','Name') ;
 
-            return $this->render('view', ['model'=>$model]);
+        // echo '<pre>';
+        // print_r(Yii::$app->request->post());
+        // exit;
+
+
+        if(Yii::$app->request->post() && $model->load(Yii::$app->request->post())){
+
+            $result = Yii::$app->navhelper->updateData($service,$model);
+            if(is_object($result)){
+                Yii::$app->session->setFlash('success','Profile Succesfully Updated');
+                return $this->redirect(['index']);
+            }else{
+                Yii::$app->session->setFlash('error',$result);
+                return $this->redirect(['index']);
+            }
+
+        } 
+
+        if(!Yii::$app->recruitment->HasProfileOnDynamics(Yii::$app->user->identity->id)){           
+            //No Profile Detected. Let's Create Them One
+            $model->E_Mail = Yii::$app->user->identity->email;
+            $model->PortalId = Yii::$app->user->identity->id;
+            $model->Phone_No = Yii::$app->user->identity->companyPhoneNo;
+            $result = Yii::$app->navhelper->postData($service,$model);
+
+            if(is_string($result)){
+                Yii::$app->session->setFlash('error',$result);
+                return $this->goHome();
+
+            }
         }
-        //No Profile Detected. Let's Create Them One
-        $model->E_Mail = Yii::$app->user->identity->email;
-        $model->PortalId = Yii::$app->user->identity->id;
-        $model->Phone_No = Yii::$app->user->identity->companyPhoneNo;
-        $result = Yii::$app->navhelper->postData($service,$model);
-        
-        if(isset($result->No)){ //Added Sucesfully
-            //Load to Model
-            $model = $this->loadtomodel($result,$model);  
-            return $this->render('view', ['model'=>$model]);
-        }
+
+        $filter = [
+            'PortalId' => Yii::$app->user->identity->id,
+        ];
+        $result = Yii::$app->navhelper->getData($service, $filter);
+
+        $model = $this->loadtomodel($result[0],$model);  
+        return $this->render('update', ['model'=>$model, 'SupplierCategories'=>$SupplierCategories, 'PostalCodes'=>$PostalCodes]);  
 
     }
 
+    public function getSupplierCategories(){
+        $service = Yii::$app->params['ServiceName']['SupplierCategory'];
+
+        $res = [];
+        $SupplierCategories = \Yii::$app->navhelper->getData($service);
+        foreach($SupplierCategories as $SupplierCategory){
+            if(!empty($SupplierCategory->Category_Code))
+            $res[] = [
+                'Code' => $SupplierCategory->Category_Code,
+                'Name' => $SupplierCategory->Description
+            ];
+        }
+
+        return $res;
+    }
+
+    public function getPostalCodes(){
+        $service = Yii::$app->params['ServiceName']['PostalCodes'];
+
+        $res = [];
+        $PostalCodes = \Yii::$app->navhelper->getData($service);
+        foreach($PostalCodes as $PostalCode){
+            if(!empty($PostalCode->Code))
+            $res[] = [
+                'Code' => $PostalCode->Code,
+                'Name' => $PostalCode->City
+            ];
+        }
+
+        return $res;
+    }
 
     public function loadtomodel($obj,$model){
 

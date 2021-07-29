@@ -93,23 +93,22 @@ $CompaniesToDisplay = Yii::$app->recruitment->getCompanies();
                                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
                                     <?php foreach ($CompaniesToDisplay as $key => $CompanyToDisplay): ?>
-                                        <?php if($CompanyToDisplay->Name == Yii::$app->session->get('SelectedCompany')): ?>
+                                            <?php if($CompanyToDisplay->Name == Yii::$app->session->get('SelectedCompany')): ?>
 
-                                        <?php continue; ?>
-
-                                        <?php endif; ?>
-                                        <a href="<?= \yii\helpers\Url::to(['site/switch', 'Id'=>$CompanyToDisplay->Name]) ?>" class="dropdown-item">
-                                            <!-- Message Start -->
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <h3 class="dropdown-item-title">
-                                                        <?= $CompanyToDisplay->Name ?>
-                                                    </h3>
+                                            <?php continue; ?>
+                                            <?php endif; ?>
+                                            <a href="<?= \yii\helpers\Url::to(['site/switch', 'Id'=>$CompanyToDisplay->Name]) ?>" class="dropdown-item">
+                                                <!-- Message Start -->
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <h3 class="dropdown-item-title">
+                                                            <?= $CompanyToDisplay->Name ?>
+                                                        </h3>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!-- Message End -->
-                                        </a>
-                                    <?php endforeach; ?>
+                                                <!-- Message End -->
+                                            </a>
+                                        <?php endforeach; ?>
 
                                 </div>
 
@@ -188,14 +187,7 @@ $CompaniesToDisplay = Yii::$app->recruitment->getCompanies();
                                     <p>Submitted Applications</p>
                                     </a>
                                 </li>
-                                <!-- <li class="nav-item">
-                                    <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Submitted Applications</p>
-                                    </a>
-                                </li> -->
-                           
-                            
+                                            
                                 </ul>
                             </li>
                             
@@ -210,28 +202,34 @@ $CompaniesToDisplay = Yii::$app->recruitment->getCompanies();
 
                       <!-- Content Wrapper. Contains page content -->
                         <div class="content-wrapper">
-                            <!-- Content Header (Page header) -->
-                            <div class="content-header" style="background-color: <?=$SecondaryColorHeaderColor ?>;border-radius: 10em;">
-                                <div class="container-fluid">
-                                    <div class="row mb-2">
-                                        
-                                        <div class="col-sm-6">
-                                            <h1 class="m-0 text-dark"> <?= $this->title ?></h1>
-                                        </div><!-- /.col -->
-
-                                        <div class="col-sm-6">
-                                            <ol class="breadcrumb float-sm-right">
-                                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                            <li class="breadcrumb-item active">Dashboard v1</li>
-                                            </ol>
-                                        </div><!-- /.col -->
-
-                                    </div><!-- /.row -->
-                                </div><!-- /.container-fluid -->
-                            </div>
+                     
                                 <!-- Main content -->
                             <section class="content">
                                 <div class="container-fluid">
+
+                                    <div class="row">
+                                        
+                                        <div class="col-md-12">
+                                                    <?php
+
+                                                    if(Yii::$app->session->hasFlash('success')){
+                                                        print ' <div class="alert alert-success alert-dismissable">
+                                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                                    <h5><i class="icon fas fa-check"></i> Success!</h5>';
+                                                        echo Yii::$app->session->getFlash('success');
+                                                        print '</div>';
+                                                    }else if(Yii::$app->session->hasFlash('error')){
+                                                        print ' <div class="alert alert-danger alert-dismissable">
+                                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                                    <h5><i class="icon fas fa-check"></i> Error!</h5>
+                                                                            ';
+                                                        echo Yii::$app->session->getFlash('error');
+                                                        print '</div>';
+                                                    }
+                                                    ?>
+                                        </div>
+                                    </div>
+
                                     <?= $content ?>
                                 </div>
                             </section>

@@ -97,6 +97,17 @@ class Recruitment extends Component
        // return $res;
     }
 
+    public function getCompanyApplicationNo(){
+        $service = Yii::$app->params['ServiceName']['VendorCard'];
+        
+        $filter = [
+            'PortalId' => Yii::$app->user->identity->id,
+        ];
+        $result = Yii::$app->navhelper->getData($service, $filter);
+        return $result;
+
+    }
+
     public function getRequisitionID($Job_ID){
         $service = Yii::$app->params['ServiceName']['RequisitionEmployeeList'];
 
