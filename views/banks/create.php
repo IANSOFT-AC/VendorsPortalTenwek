@@ -3,7 +3,7 @@
 ?>
  <?= $this->render('_form', [
         'model' => $model,
-        'Countries' => $Countries,
+        'Banks' => $Banks,
         'Cities' => $Cities
 
     ]) ?>

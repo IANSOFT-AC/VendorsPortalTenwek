@@ -166,10 +166,9 @@ $profileAction = ''; //(Yii::$app->user->identity->profileID)?'update?No='.Yii::
                 <div class="breadcrumbb flat">
                     <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'company-profile/' ?>" <?= Yii::$app->recruitment->currentaction('company-profile',['index', 'index'])?'class="active"': '' ?>>Company Details</a>
                     <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'partner-details/' ?>" <?= Yii::$app->recruitment->currentaction('partner-details','index')?'class="active"': '' ?>>Partner Details</a>
-                    <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'experience/index' ?>" <?= Yii::$app->recruitment->currentaction('experience','index')?'class="active"': '' ?>>Employment record</a>
-                    <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'hobby/index' ?>" <?= Yii::$app->recruitment->currentaction('hobby','index')?'class="active"': '' ?>>Hobbies</a>
-                    <!-- <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'language/index' ?>" <?= Yii::$app->recruitment->currentaction('language','index')?'class="active"': '' ?>>Extended profile Questions</a> -->
-                    <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'referee/index' ?>" <?= Yii::$app->recruitment->currentaction('referee','index')?'class="active"': '' ?>>Referees</a>
+                    <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'banks/' ?>" <?= Yii::$app->recruitment->currentaction('banks','index')?'class="active"': '' ?>>Bank Details</a>
+                    <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'supplier-categories/index' ?>" <?= Yii::$app->recruitment->currentaction('supplier-categories','index')?'class="active"': '' ?>>Supplier Categories</a>
+                    <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'referee/index' ?>" <?= Yii::$app->recruitment->currentaction('referee','index')?'class="active"': '' ?>>Attachements</a>
                     <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'recruitment/declaration' ?>" <?= Yii::$app->recruitment->currentaction('recruitment','declaration')?'class="active"': '' ?>>Declaration</a>
                 </div>
            

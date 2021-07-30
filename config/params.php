@@ -37,6 +37,10 @@ return [
         'PostalCodes'=>'PostalCodes',//367 Page
         'SupplierPartnerDetails'=>'SupplierPartnerDetails', //66056 Page,
         'Countries'=>'Countries', //10 Page
+        'SupplierBankAccounts'=>'SupplierBankAccounts',//66058 Page
+        'BankBranches'=>'BankBranches',// 66068 Page
+        'KenyaBanks'=>'KenyaBanks', //66067 Page
+        'SupplierCategories'=>'SupplierCategories',// 66065 Page
     ],
 
 ];

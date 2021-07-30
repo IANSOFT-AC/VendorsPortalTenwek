@@ -2,21 +2,21 @@
 
 namespace app\controllers;
 use yii\helpers\ArrayHelper;
-use app\models\PartnerDetails;
+use app\models\BankDetails;
 use yii\web\Response;
 use yii\filters\ContentNegotiator;
 use yii\filters\AccessControl;
 use Yii;
 use yii\filters\VerbFilter;
 
-class PartnerDetailsController extends \yii\web\Controller
+class BanksController extends \yii\web\Controller
 {
     public function behaviors()
     {
        return [ 
            'contentNegotiator' =>[
                 'class' => ContentNegotiator::class,
-                'only' => ['get-partners',],
+                'only' => ['get-banks', 'sub-bank-branches'],
                 'formatParam' => '_format',
                 'formats' => [
                     'application/json' => Response::FORMAT_JSON,
@@ -53,14 +53,15 @@ class PartnerDetailsController extends \yii\web\Controller
     }
     public function actionCreate()
     {
-        $model = new PartnerDetails();
-        $service = Yii::$app->params['ServiceName']['SupplierPartnerDetails'];
+        $model = new BankDetails();
+        $service = Yii::$app->params['ServiceName']['SupplierBankAccounts'];
 
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('create', [
                 'model' => $model,
-                'Countries' => ArrayHelper::map($this->getCountries(),'Code','Name'),
+                'Banks' => ArrayHelper::map($this->getBanks(),'Code','Name'),
                 'Cities' => ArrayHelper::map($this->getPostalCodes(),'Code','Name'),
+
             ]);
         }
 
@@ -82,16 +83,35 @@ class PartnerDetailsController extends \yii\web\Controller
 
     }
 
+    public function actionBankBranches() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $out = self::getBankBranches($cat_id); 
+                // the getSubCatList function will query the database based on the
+                // cat_id and return an array like below:
+                // [
+                //    ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
+                //    ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
+                // ]
+                return ['output'=>$out, 'selected'=>''];
+            }
+        }
+        return ['output'=>'', 'selected'=>''];
+    }
+
     public function actionIndex()
     {
         return $this->render('index');
     }
 
-    public function actionUpdate($VendorNo, $PartnerId)
+    public function actionUpdate($VendorNo, $BankId)
     {
-        $model = new PartnerDetails();
-        $service = Yii::$app->params['ServiceName']['SupplierPartnerDetails'];
-        $filter = ['Supplier_No' => $VendorNo, 'Partner_ID_No'=>$PartnerId ];
+        $model = new BankDetails();
+        $service = Yii::$app->params['ServiceName']['SupplierBankAccounts'];
+        $filter = ['Supplier_No' => $VendorNo, 'Code'=>$BankId ];
         $PartnerDetails = \Yii::$app->navhelper->getData($service, $filter);
         Yii::$app->navhelper->loadmodel($PartnerDetails[0],$model);
 
@@ -99,10 +119,11 @@ class PartnerDetailsController extends \yii\web\Controller
             return $this->renderAjax('update', [
                 'model' => $model,
                 'model' => $model,
-                'Countries' => ArrayHelper::map($this->getCountries(),'Code','Name'),
+                'Banks' => ArrayHelper::map($this->getBanks(),'Code','Name'),
                 'Cities' => ArrayHelper::map($this->getPostalCodes(),'Code','Name'),
             ]);
         }
+
 
         if(Yii::$app->request->post() && $model->load(Yii::$app->request->post())){
             $result = Yii::$app->navhelper->updateData($service,$model);
@@ -115,12 +136,13 @@ class PartnerDetailsController extends \yii\web\Controller
             }
 
         }
+
     }
 
     public function actionDelete($VendorNo, $PartnerId)
     {
-        $model = new PartnerDetails();
-        $service = Yii::$app->params['ServiceName']['SupplierPartnerDetails'];
+        $model = new BankDetails();
+        $service = Yii::$app->params['ServiceName']['SupplierBankAccounts'];
         $filter = ['Supplier_No' => $VendorNo, 'Partner_ID_No'=>$PartnerId ];
         $PartnerDetails = \Yii::$app->navhelper->getData($service, $filter);
         Yii::$app->navhelper->loadmodel($PartnerDetails[0],$model);
@@ -154,6 +176,41 @@ class PartnerDetailsController extends \yii\web\Controller
     }
 
 
+    public function getBanks(){
+        $service = Yii::$app->params['ServiceName']['KenyaBanks'];
+        $res = [];
+        $countries = \Yii::$app->navhelper->getData($service);
+        foreach($countries as $c){
+            if(!empty($c->Bank_Name))
+            $res[] = [
+                'Code' => $c->Bank_Code,
+                'Name' => $c->Bank_Name
+            ];
+        }
+
+        return $res;
+    }
+    
+
+    
+    public static function getBankBranches($Bank){
+        $service = Yii::$app->params['ServiceName']['BankBranches'];
+        $filter = ['Bank_Code' => $Bank];
+        $res = [];
+        $Branches = \Yii::$app->navhelper->getData($service, $filter);
+        foreach($Branches as $Branch){
+            if(!empty($Branch->Name))
+            $res[] = [
+                'Code' => $Branch->Branch_Code,
+                'Name' => $Branch->Branch_Name
+            ];
+        }
+
+        return $res;
+    }
+
+
+
     public function getPostalCodes(){
         $service = Yii::$app->params['ServiceName']['PostalCodes'];
 
@@ -172,48 +229,48 @@ class PartnerDetailsController extends \yii\web\Controller
 
 
     
-    public function actionGetPartners(){
+    public function actionGetBanks(){
         $CompanyData  = Yii::$app->recruitment->getCompanyApplicationNo();
-        $service = Yii::$app->params['ServiceName']['SupplierPartnerDetails'];
+        $service = Yii::$app->params['ServiceName']['SupplierBankAccounts'];
         $filter = ['Supplier_No' => $CompanyData[0]->No];
-        $Partners = \Yii::$app->navhelper->getData($service,$filter);
+        $Banks = \Yii::$app->navhelper->getData($service,$filter);
         // echo '<pre>';
         // print_r($Partners);
         // exit;
         $result = [];
         $count = 0;
 
-        if(!is_object($Partners)){
-            foreach($Partners as $Partner){
-                if(!empty($Partner->Partner_Name)){
+        if(!is_object($Banks)){
+            foreach($Banks as $Bank){
+                if(!empty($Bank->Code)){
                     ++$count;
 
                     $EditLink = 
                          \yii\helpers\Html::button('Edit',
-                            [  'value' => \yii\helpers\Url::to(['partner-details/update',
-                                'VendorNo'=> @$Partner->Supplier_No , 'PartnerId'=>$Partner->Partner_ID_No
+                            [  'value' => \yii\helpers\Url::to(['banks/update',
+                                'VendorNo'=> @$Bank->Supplier_No , 'BankId'=>$Bank->Code
                                 ]),
-                                'title' => 'Edit '. $Partner->Partner_Name. 'Details',
+                                'title' => 'Edit Bank Details',
                                 'class' => 'btn btn-outline-info push-right showModalButton',
                                 ]
                             ); 
 
                     $Deletelink =  \yii\helpers\Html::a('Remove',['delete',
-                        'VendorNo'=> @$Partner->Supplier_No , 'PartnerId'=>$Partner->Partner_ID_No ],
+                        'VendorNo'=> @$Bank->Supplier_No , 'BankId'=>$Bank->Code ],
                             ['class'=>'btn btn-outline-danger push-left', 'data'=>[
-                             'confirm'=>'Are You Sure You Want To Remove the Partner?',
+                             'confirm'=>'Are You Sure You Want To Remove the Bank?',
                              'method'=>'post'
                          ]]
                     );
 
                     $result['data'][] = [
                         'index' => $count,
-                        'Key' => $Partner->Key,
-                        'Partner_Name' => !empty($Partner->Partner_Name)?$Partner->Partner_Name:'',
-                        'PIN' => !empty($Partner->PIN)?$Partner->PIN:'',
-                        'Mobile_No__x002B_254' => !empty($Partner->Mobile_No__x002B_254)? $Partner->Mobile_No__x002B_254 : '',
-                        'Shares'=>!empty($Partner->Shares)?$Partner->Shares:'',
-                        'Nationality'=>!empty($Partner->Nationality)?$Partner->Nationality:'',
+                        'Key' => $Bank->Key,
+                        'Bank_Name' => !empty($Bank->Name)?$Bank->Name:'',
+                        'Post_Code' => !empty($Bank->Post_Code)?$Bank->Post_Code:'',
+                        'Bank_Account_No' => !empty($Bank->Bank_Account_No)? $Bank->Bank_Account_No : '',
+                        'SWIFT_Code'=>!empty($Bank->SWIFT_Code)?$Bank->SWIFT_Code:'',
+                        'Bank_Branch_No'=>!empty($Bank->Bank_Branch_No)?$Bank->Bank_Branch_No:'',
                         'Action' => $EditLink .' '. $Deletelink
                     ];
                 }

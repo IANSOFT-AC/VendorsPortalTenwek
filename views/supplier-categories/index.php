@@ -1,5 +1,5 @@
 <?php
-$this->title = 'Organization Partners';
+$this->title = 'Supplier Categories';
 ?>
 
 <?= $this->render('..\company-profile\_steps') ?>
@@ -8,10 +8,10 @@ $this->title = 'Organization Partners';
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <?=  \yii\helpers\Html::button('Add Partner',
-                            [  'value' => \yii\helpers\Url::to(['partner-details/create',
+                    <?=  \yii\helpers\Html::button('Add Supplier Category',
+                            [  'value' => \yii\helpers\Url::to(['supplier-categories/create',
                                 ]),
-                                'title' => 'New Partner',
+                                'title' => 'New Supplier Category',
                                 'class' => 'btn btn-info push-right showModalButton',
                                 ]
                             ); 
@@ -26,7 +26,7 @@ $this->title = 'Organization Partners';
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Organization Partners</h3>
+                    <h3 class="card-title">Supplier Categories</h3>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered dt-responsive table-hover" id="partners">
@@ -55,22 +55,18 @@ $script = <<<JS
           $('#partners').DataTable({
            
             //serverSide: true,  
-            ajax: absolute+'partner-details/get-partners',
+            ajax: absolute+'supplier-categories/get-supplier-categories',
             paging: true,
             columns: [
-                { title: '....', data: 'index'},
-                { title: 'Partner Name' ,data: 'Partner_Name'},
-                { title: 'KRA PIN' ,data: 'PIN'},
-                { title: 'Mobile No' ,data: 'Mobile_No__x002B_254'},
-                { title: 'Shares' ,data: 'Shares'},
-                { title: 'Nationality' ,data: 'Nationality'},
+                { title: '#', data: 'index'},
+                { title: 'Category Name' ,data: 'Description'},
                 { title: 'Action' ,data: 'Action'},
                 //{ title: 'Remove' ,data: 'Remove'},
                 
                
             ] ,                              
            language: {
-                "zeroRecords": "No Partners to Show.."
+                "zeroRecords": "No Supplier Categories to Show.."
             },
             
             order : [[ 0, "asc" ]]

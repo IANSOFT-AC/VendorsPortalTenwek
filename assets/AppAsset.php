@@ -20,6 +20,10 @@ class AppAsset extends AssetBundle{
         'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css',
         'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
 
+        'https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css',
+       ' https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css',
+
+       'https://use.fontawesome.com/releases/v5.3.1/css/all.css'
 
     ];
 
@@ -44,18 +48,20 @@ class AppAsset extends AssetBundle{
         'https://cdn.jsdelivr.net/npm/sweetalert2@9',
 
         'Js/ShowModal.js', // Helps in Global Modal4
-        // 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js',
-
         'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.full.min.js',
         // 'https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js',
         // 'https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js ',
         'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js',
-
         
-        'plugins/datatables/jquery.dataTables.min.js',
-        'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js',
-        'plugins/datatables-responsive/js/dataTables.responsive.min.js',
-        'plugins/datatables-responsive/js/responsive.bootstrap4.min.js',
+        // 'plugins/datatables/jquery.dataTables.min.js',
+        // 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js',
+        // 'plugins/datatables-responsive/js/dataTables.responsive.min.js',
+        // 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js',
+        // 'https://code.jquery.com/jquery-3.5.1.js',
+       ' https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js',
+        'https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js',
+
+        'https://use.fontawesome.com/releases/v5.3.1/js/all.js',
 
     ];
 
