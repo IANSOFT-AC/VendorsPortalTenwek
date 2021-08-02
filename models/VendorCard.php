@@ -38,14 +38,14 @@ class VendorCard extends Model
     public $Payment_Method_Code;
     public $PortalId;
     public $Key;
-
+    public $HasAcceptedTermsAndConditions;
 
     public function rules()
     {
         return [
             [['E_Mail', 'PIN_No', 'Trade_Licennse_No', 'Supplier_Type', 
                  'Phone_No', 'Address', 'VAT_Certificate_No', 'Tax_Compliance_Expiry_Date', 'Tax_Compliance_Certificate_No',
-                 'Registration_No', 'Certificate_of_Incorporation', 'Name', 'Key', 'Registration_Date'], 
+                 'Registration_No', 'Certificate_of_Incorporation', 'Name', 'Key', 'Registration_Date', 'HasAcceptedTermsAndConditions'], 
             'required'],
 
            ['E_Mail', 'email'],
@@ -69,7 +69,8 @@ class VendorCard extends Model
             'Tax_Compliance_Certificate_No' =>  'Tax Compliance Certificate',
             'Registration_No' => 'Business Registration No',
             'Certificate_of_Incorporation' => 'Certificate of Incorporation',
-            'Name'=>'Organization Name'
+            'Name'=>'Organization Name',
+            'HasAcceptedTermsAndConditions'=>'Accept Terms And Conditions'
 
 
         ];

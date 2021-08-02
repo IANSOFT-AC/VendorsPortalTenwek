@@ -41,6 +41,9 @@ return [
         'BankBranches'=>'BankBranches',// 66068 Page
         'KenyaBanks'=>'KenyaBanks', //66067 Page
         'SupplierCategories'=>'SupplierCategories',// 66065 Page
+
+        /********************CODE UNITS SERVICES***************************************/
+        'PortalFactory' => 'PortalFactory', //Code Unit 50062
     ],
 
 ];

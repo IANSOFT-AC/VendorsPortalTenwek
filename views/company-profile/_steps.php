@@ -169,7 +169,7 @@ $profileAction = ''; //(Yii::$app->user->identity->profileID)?'update?No='.Yii::
                     <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'banks/' ?>" <?= Yii::$app->recruitment->currentaction('banks','index')?'class="active"': '' ?>>Bank Details</a>
                     <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'supplier-categories/index' ?>" <?= Yii::$app->recruitment->currentaction('supplier-categories','index')?'class="active"': '' ?>>Supplier Categories</a>
                     <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'referee/index' ?>" <?= Yii::$app->recruitment->currentaction('referee','index')?'class="active"': '' ?>>Attachements</a>
-                    <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'recruitment/declaration' ?>" <?= Yii::$app->recruitment->currentaction('recruitment','declaration')?'class="active"': '' ?>>Declaration</a>
+                    <a href="<?=  Yii::$app->recruitment->absoluteUrl() .'declaration/' ?>" <?= Yii::$app->recruitment->currentaction('declaration','index')?'class="active"': '' ?>>Declaration</a>
                 </div>
            
 

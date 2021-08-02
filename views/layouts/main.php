@@ -157,7 +157,7 @@ $CompaniesToDisplay = Yii::$app->recruitment->getCompanies();
                                 <a href="<?= $absoluteUrl ?>recruitment/" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Browse Jobs
+                                    Browse Tenders
                                 </p>
                                 </a>
                             </li>
@@ -176,7 +176,7 @@ $CompaniesToDisplay = Yii::$app->recruitment->getCompanies();
                                 <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
-                                    Job Applications
+                                    Tender Applications
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                                 </a>
