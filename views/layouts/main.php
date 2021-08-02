@@ -154,7 +154,7 @@ $CompaniesToDisplay = Yii::$app->recruitment->getCompanies();
                                 with font-awesome or any other icon font library -->
                             
                             <li class="nav-item">
-                                <a href="<?= $absoluteUrl ?>recruitment/" class="nav-link">
+                                <a href="<?= $absoluteUrl ?>tenders/" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Browse Tenders

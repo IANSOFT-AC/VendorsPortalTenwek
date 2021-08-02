@@ -83,7 +83,7 @@ $config = [
         ],
         
     ],
-    'defaultRoute' => 'recruitment/vacancies'
+    'defaultRoute' => 'recruitment/vacancies',
     'params' => $params,
 ];
 
