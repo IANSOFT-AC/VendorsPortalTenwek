@@ -167,4 +167,19 @@ class User extends ActiveRecord implements IdentityInterface
         return Yii::$app->security->validatePassword($password, $this->password_hash);
 
     }
+
+    public function ApprovedProfileNo()
+    {
+        $service = Yii::$app->params['ServiceName']['VendorCard'];
+        $filter = [
+            'PortalId' => Yii::$app->user->identity->id,
+        ];
+
+        $result = \Yii::$app->navhelper->getData($service,$filter);
+
+        echo '<pre>';
+        print_r($result);
+        exit;
+    }
+
 }

@@ -45,10 +45,24 @@ class CompanyProfileController extends Controller
         ];
     }
 
+    
+
     public function beforeAction($action){
         if(Yii::$app->user->isGuest){
             $this->layout = 'guest';
-            $this->goHome();
+        }
+        //Check  If Company Is Selected
+        $NotGuest = !(Yii::$app->user->isGuest);
+        $CompanyIsSelected =false;
+        if (!Yii::$app->session->has('SelectedCompany')){
+          $CompanyIsSelected =true;
+        }
+
+        if (($CompanyIsSelected && $NotGuest)){
+            if($action->id == 'select-company'){
+                return true;
+            }
+            $this->redirect(array('site/select-company'));
         }
         if (!parent::beforeAction($action)) {
             return false;
@@ -87,6 +101,7 @@ class CompanyProfileController extends Controller
             $model->E_Mail = Yii::$app->user->identity->email;
             $model->PortalId = Yii::$app->user->identity->id;
             $model->Phone_No = Yii::$app->user->identity->companyPhoneNo;
+            $model->Name = Yii::$app->user->identity->CompanyName;
             $result = Yii::$app->navhelper->postData($service,$model);
 
             if(is_string($result)){
@@ -101,7 +116,10 @@ class CompanyProfileController extends Controller
         ];
         $result = Yii::$app->navhelper->getData($service, $filter);
 
-        $model = $this->loadtomodel($result[0],$model);  
+        if (Yii::$app->session->has('SelectedCompany')){
+            $model = $this->loadtomodel($result[0],$model);  
+        }
+
         return $this->render('update', ['model'=>$model, 'SupplierCategories'=>$SupplierCategories, 'PostalCodes'=>$PostalCodes]);  
 
     }

@@ -51,6 +51,30 @@ class SupplierCategoriesController extends \yii\web\Controller
         ];
 
     }
+
+    public function beforeAction($action){
+        if(Yii::$app->user->isGuest){
+            $this->layout = 'guest';
+        }
+        //Check  If Company Is Selected
+        $NotGuest = !(Yii::$app->user->isGuest);
+        $CompanyIsSelected =false;
+        if (!Yii::$app->session->has('SelectedCompany')){
+          $CompanyIsSelected =true;
+        }
+
+        if (($CompanyIsSelected && $NotGuest)){
+            if($action->id == 'select-company'){
+                return true;
+            }
+            $this->redirect(array('site/select-company'));
+        }
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        return true; // or false to not run the action
+    }
+    
     public function actionCreate()
     {
         $model = new SupplierCategories();
@@ -175,14 +199,14 @@ class SupplierCategoriesController extends \yii\web\Controller
 
 
     public function getBanks(){
-        $service = Yii::$app->params['ServiceName']['KenyaBanks'];
+        $service = Yii::$app->params['ServiceName']['SupplierItemCategories'];
         $res = [];
         $countries = \Yii::$app->navhelper->getData($service);
         foreach($countries as $c){
-            if(!empty($c->Bank_Name))
+            if(!empty($c->Category_Code))
             $res[] = [
-                'Code' => $c->Bank_Code,
-                'Name' => $c->Bank_Name
+                'Code' => $c->Category_Code,
+                'Name' => $c->Description
             ];
         }
 

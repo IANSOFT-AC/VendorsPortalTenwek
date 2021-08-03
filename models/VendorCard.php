@@ -8,6 +8,7 @@ use yii\base\Model;
 class VendorCard extends Model
 {
     public $No;
+    public $Status;
     public $Name;
     public $Balance_LCY;
     public $Balance_Due_LCY;

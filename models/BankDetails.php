@@ -24,7 +24,7 @@ class BankDetails extends Model
         {
             return [
                 [['Code', 
-                     'City', 'Post_Code', 'Contact',  'Bank_Account_No', 'SWIFT_Code',], 
+                     'City', 'Post_Code', 'Contact',  'Bank_Account_No',], 
                 'required'],
     
                 ['Bank_Account_No', 'string',  'min'=>7],

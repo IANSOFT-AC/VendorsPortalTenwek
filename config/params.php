@@ -41,6 +41,7 @@ return [
         'BankBranches'=>'BankBranches',// 66068 Page
         'KenyaBanks'=>'KenyaBanks', //66067 Page
         'SupplierCategories'=>'SupplierCategories',// 66065 Page
+        'SupplierItemCategories'=>'SupplierItemCategories', //66055 Page
 
         'AdvertisedTenderList'=>'AdvertisedTenderList', //67013
 

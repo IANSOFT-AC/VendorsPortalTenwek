@@ -13,6 +13,7 @@ use app\models\ResetPasswordForm;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use app\models\VerifyEmailForm;
+use yii\helpers\ArrayHelper;
 
 
 class SiteController extends Controller
@@ -25,10 +26,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'index', ],
+                'only' => ['logout', 'index', 'select-company'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'index',],
+                        'actions' => ['logout', 'index', 'select-company'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -37,7 +38,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    // 'logout' => ['post'],
                 ],
             ],
         ];
@@ -46,6 +47,19 @@ class SiteController extends Controller
     public function beforeAction($action){
         if(Yii::$app->user->isGuest){
             $this->layout = 'guest';
+        }
+        //Check  If Company Is Selected
+        $NotGuest = !(Yii::$app->user->isGuest);
+        $CompanyIsSelected =false;
+        if (!Yii::$app->session->has('SelectedCompany')){
+          $CompanyIsSelected =true;
+        }
+
+        if (($CompanyIsSelected && $NotGuest)){
+            if($action->id == 'select-company'){
+                return true;
+            }
+            $this->redirect(array('site/select-company'));
         }
         if (!parent::beforeAction($action)) {
             return false;
@@ -77,6 +91,12 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionSelectCompany(){
+        $Companies =  Yii::$app->recruitment->getCompanies();
+        $this->layout = 'companyselect';
+        return $this->render('select-company', ['Companies'=>$Companies]);
     }
 
 
@@ -138,7 +158,9 @@ class SiteController extends Controller
             Yii::$app->session->remove('SelectedCompany');
         }
         Yii::$app->session->set('SelectedCompany', $Id);
-        return $this->redirect(['index',]);
+        Yii::$app->session->setFlash('success', 'Succesfully Switched Company');
+        return $this->goHome();
+
 
     }
 
@@ -252,6 +274,21 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function getCompanies(){
+        $service = Yii::$app->params['ServiceName']['Companies'];
+        $res = [];
+        $Companies = \Yii::$app->navhelper->getData($service);
+        foreach($Companies as $Company){
+            if(!empty($Company->Name))
+            $res[] = [
+                'Code' => $Company->Name,
+                'Name' => $Company->Display_Name
+            ];
+        }
+
+        return $res;
     }
 
 }

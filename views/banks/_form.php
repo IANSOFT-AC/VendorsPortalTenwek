@@ -28,7 +28,6 @@ use kartik\depdrop\DepDrop;
                                 <div class="col-sm-6">
                                     <?= $form->field($model, 'Code')->dropDownList($Banks, ['prompt' => 'Select a Bank', 'id'=>'cat-id']) ?>
                                     <?= $form->field($model, 'Contact')->textInput(['type' => 'number']) ?>
-                                    <?= $form->field($model, 'SWIFT_Code')->textInput() ?>
 
                                 </div>
 

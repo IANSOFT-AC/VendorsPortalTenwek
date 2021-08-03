@@ -27,6 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 ])->label(false) ?>
 
 
+                 <?= $form->field($model, 'CompanyName',[
+                    'inputTemplate' => '<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-clipboard"></i></span>{input}</div>'
+                ])->textInput(['placeholder' => 'Company Name'])->label(false) ?>
+
+
                 <?= $form->field($model, 'email',[
                     'inputTemplate' => '<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span>{input}</div>'
                 ])->textInput(['placeholder' => 'Company E-mail Address'])->label(false) ?>

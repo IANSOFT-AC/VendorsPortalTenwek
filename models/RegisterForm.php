@@ -11,6 +11,7 @@ class RegisterForm extends Model
     public $password;
     public $confirmpassword;
     public $companyPhoneNo;
+    public $CompanyName;
 
     /**
      * {@inheritdoc}
@@ -21,6 +22,7 @@ class RegisterForm extends Model
 
             ['email', 'trim'],
             ['email', 'required'],
+            ['CompanyName', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This email address has already been taken.'],
@@ -58,6 +60,7 @@ class RegisterForm extends Model
         $user = new User();
         $user->email = $this->email;
         $user->companyPhoneNo = $this->companyPhoneNo;
+        $user->CompanyName = $this->CompanyName;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
@@ -85,9 +88,5 @@ class RegisterForm extends Model
             ->send();
     }
 
-    public function goHome()
-    {
-        return Yii::$app->getResponse()->redirect(Yii::$app->urlManager->createAbsoluteUrl(['recruitment/login']));
-    }
-   
+
 }

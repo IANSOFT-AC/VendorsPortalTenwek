@@ -34,28 +34,6 @@ $CompaniesToDisplay = Yii::$app->recruitment->getCompanies();
         <body class="hold-transition sidebar-mini layout-navbar-fixed">
             <?php $this->beginBody() ?>
 
-                    <!-- Global Modal Here -->
-                <div class="modal fade bs-example-modal-lg bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content" id="modalContent">
-
-                            <div class="modal-header" id="modalHeader">
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel" style="position: absolute"></h4>
-                            </div>
-
-                            <div class="modal-body">
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
 
                 <div class="wrapper">
 
@@ -148,55 +126,6 @@ $CompaniesToDisplay = Yii::$app->recruitment->getCompanies();
                             </div>
                         </div>
 
-                        <!-- Sidebar Menu -->
-                        <nav class="mt-2">
-                            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <!-- Add icons to the links using the .nav-icon class
-                                with font-awesome or any other icon font library -->
-                            
-                            <li class="nav-item">
-                                <a href="<?= $absoluteUrl ?>tenders/" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Browse Tenders
-                                </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                
-                                <a href="<?= yii\helpers\Url::to(['company-profile/',]) ?>" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Company Profile
-                                </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
-                                <p>
-                                    Tender Applications
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>job-applications" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Submitted Applications</p>
-                                    </a>
-                                </li>
-                                            
-                                </ul>
-                            </li>
-                            
-                       
-                        
-                            </ul>
-                        </nav>
-                        <!-- /.sidebar-menu -->
                         </div>
                         <!-- /.sidebar -->
                     </aside>
