@@ -91,15 +91,15 @@ class AttachementsController extends \yii\web\Controller
             ]);
         }
 
-        if(Yii::$app->request->post()){
+        if(Yii::$app->request->post() && $model->load(Yii::$app->request->post())){
 
             // $model->File_path = UploadedFile::getInstance($model, 'imageFile');
             $model->File_path = UploadedFile::getInstanceByName('File_path');
 
-            echo "<pre>";
-            print_r(Yii::$app->request->post());
-            echo "</pre>";
-            exit();
+            // echo "<pre>";
+            // print_r($model);
+            // echo "</pre>";
+            // exit();
 
             $result = $model->Upload($model);
 

@@ -50,13 +50,12 @@ class SupplierAttachement extends Model
                 FileHelper::createDirectory(dirname($imagePath));
             }
 
-            $this->attachmentfile->saveAs($imagePath);
+            $this->File_path->saveAs($imagePath);
             $CompanyProfileData = Yii::$app->recruitment->getCompanyApplicationNo();
 
                 //Post to Nav
             $service = Yii::$app->params['ServiceName']['SupplierAttachements'];
             $model->Supplier_No = $CompanyProfileData[0]->No;
-            $model->Supplier_No = $model->Document_No;
             $model->File_path = $imagePath;//$imagePath;
             $result = Yii::$app->navhelper->postData($service, $model);
             
