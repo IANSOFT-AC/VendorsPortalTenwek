@@ -43,7 +43,10 @@ return [
         'SupplierCategories'=>'SupplierCategories',// 66065 Page
         'SupplierItemCategories'=>'SupplierItemCategories', //66055 Page
 
-        'AdvertisedTenderList'=>'AdvertisedTenderList', //67013
+        'AdvertisedTenderList'=>'AdvertisedTenderList', //67013 Page
+        'QuotationBidders'=>'QuotationBidders', //67036 Page
+
+        'SupplierAttachements'=>'SupplierAttachements', //66063 Page
 
         /********************CODE UNITS SERVICES***************************************/
         'PortalFactory' => 'PortalFactory', //Code Unit 50062
